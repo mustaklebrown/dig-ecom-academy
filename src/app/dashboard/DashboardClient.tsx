@@ -465,191 +465,58 @@ export default function DashboardClient({
   return (
     <div>
       {/* Navigation Tabs */}
-      <div
-        style={{
-          display: "flex",
-          gap: 10,
-          marginBottom: 24,
-          flexWrap: "wrap",
-        }}
-      >
+      <div className="dash-tabs-bar">
         <button
           type="button"
           onClick={() => setActiveTab("leads")}
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: 8,
-            padding: "12px 20px",
-            borderRadius: 14,
-            fontWeight: 750,
-            fontSize: 14,
-            border: "1.5px solid",
-            borderColor: activeTab === "leads" ? "var(--blue)" : "var(--bd)",
-            background:
-              activeTab === "leads"
-                ? "linear-gradient(135deg, rgba(83,98,255,0.2) 0%, rgba(83,98,255,0.08) 100%)"
-                : "var(--card)",
-            color: activeTab === "leads" ? "var(--blue)" : "var(--tx)",
-            cursor: "pointer",
-            transition: "all 0.2s ease",
-            boxShadow: activeTab === "leads" ? "var(--sh)" : "none",
-          }}
+          className={`dash-tab-btn ${activeTab === "leads" ? "active" : ""}`}
         >
-          <Users size={18} />
+          <Users size={17} />
           <span>Inscriptions &amp; Candidatures</span>
-          <span
-            style={{
-              padding: "2px 8px",
-              borderRadius: 999,
-              fontSize: 12,
-              background:
-                activeTab === "leads" ? "var(--blue)" : "rgba(255,255,255,0.1)",
-              color: activeTab === "leads" ? "#fff" : "var(--mu)",
-            }}
-          >
-            {leads.length}
-          </span>
+          <span className="dash-tab-counter">{leads.length}</span>
         </button>
 
         <button
           type="button"
           onClick={() => setActiveTab("formations")}
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: 8,
-            padding: "12px 20px",
-            borderRadius: 14,
-            fontWeight: 750,
-            fontSize: 14,
-            border: "1.5px solid",
-            borderColor:
-              activeTab === "formations" ? "var(--blue)" : "var(--bd)",
-            background:
-              activeTab === "formations"
-                ? "linear-gradient(135deg, rgba(83,98,255,0.2) 0%, rgba(83,98,255,0.08) 100%)"
-                : "var(--card)",
-            color: activeTab === "formations" ? "var(--blue)" : "var(--tx)",
-            cursor: "pointer",
-            transition: "all 0.2s ease",
-            boxShadow: activeTab === "formations" ? "var(--sh)" : "none",
-          }}
+          className={`dash-tab-btn ${activeTab === "formations" ? "active" : ""}`}
         >
-          <BookOpen size={18} />
+          <BookOpen size={17} />
           <span>Gestion des Formations</span>
-          <span
-            style={{
-              padding: "2px 8px",
-              borderRadius: 999,
-              fontSize: 12,
-              background:
-                activeTab === "formations"
-                  ? "var(--blue)"
-                  : "rgba(255,255,255,0.1)",
-              color: activeTab === "formations" ? "#fff" : "var(--mu)",
-            }}
-          >
-            {formations.length}
-          </span>
+          <span className="dash-tab-counter">{formations.length}</span>
         </button>
 
         <button
           type="button"
           onClick={() => setActiveTab("settings")}
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: 8,
-            padding: "12px 20px",
-            borderRadius: 14,
-            fontWeight: 750,
-            fontSize: 14,
-            border: "1.5px solid",
-            borderColor:
-              activeTab === "settings" ? "var(--blue)" : "var(--bd)",
-            background:
-              activeTab === "settings"
-                ? "linear-gradient(135deg, rgba(83,98,255,0.2) 0%, rgba(83,98,255,0.08) 100%)"
-                : "var(--card)",
-            color: activeTab === "settings" ? "var(--blue)" : "var(--tx)",
-            cursor: "pointer",
-            transition: "all 0.2s ease",
-            boxShadow: activeTab === "settings" ? "var(--sh)" : "none",
-          }}
+          className={`dash-tab-btn ${activeTab === "settings" ? "active" : ""}`}
         >
-          <SettingsIcon size={18} />
+          <SettingsIcon size={17} />
           <span>Coordonnées &amp; Siège</span>
         </button>
 
         <button
           type="button"
           onClick={() => setActiveTab("faqs")}
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: 8,
-            padding: "12px 20px",
-            borderRadius: 14,
-            fontWeight: 750,
-            fontSize: 14,
-            border: "1.5px solid",
-            borderColor: activeTab === "faqs" ? "var(--blue)" : "var(--bd)",
-            background:
-              activeTab === "faqs"
-                ? "linear-gradient(135deg, rgba(83,98,255,0.2) 0%, rgba(83,98,255,0.08) 100%)"
-                : "var(--card)",
-            color: activeTab === "faqs" ? "var(--blue)" : "var(--tx)",
-            cursor: "pointer",
-            transition: "all 0.2s ease",
-            boxShadow: activeTab === "faqs" ? "var(--sh)" : "none",
-          }}
+          className={`dash-tab-btn ${activeTab === "faqs" ? "active" : ""}`}
         >
-          <HelpCircle size={18} />
+          <HelpCircle size={17} />
           <span>Questions Fréquentes (FAQ)</span>
-          <span
-            style={{
-              padding: "2px 8px",
-              borderRadius: 999,
-              fontSize: 12,
-              background:
-                activeTab === "faqs" ? "var(--blue)" : "rgba(255,255,255,0.1)",
-              color: activeTab === "faqs" ? "#fff" : "var(--mu)",
-            }}
-          >
-            {faqs.length}
-          </span>
+          <span className="dash-tab-counter">{faqs.length}</span>
         </button>
       </div>
 
       {/* TAB 1: LEADS MANAGEMENT */}
       {activeTab === "leads" && (
-        <div
-          style={{
-            background: "var(--card)",
-            border: "1px solid var(--bd)",
-            borderRadius: 22,
-            padding: "24px 28px",
-            boxShadow: "var(--sh)",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              flexWrap: "wrap",
-              gap: 16,
-              marginBottom: 24,
-            }}
-          >
+        <div className="dash-card">
+          <div className="dash-leads-controls">
             <h2 style={{ fontSize: 18, fontWeight: 800, margin: 0 }}>
               Liste des inscriptions récentes
             </h2>
 
-            <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+            <div className="dash-filter-group" style={{ flex: 1, justifyContent: "flex-end" }}>
               {/* Search */}
-              <div style={{ position: "relative", width: 220 }}>
+              <div className="dash-search-box">
                 <Search
                   size={16}
                   style={{
@@ -707,7 +574,7 @@ export default function DashboardClient({
                 style={{ display: "inline-flex", alignItems: "center", gap: 6 }}
               >
                 <Download size={15} />
-                <span>Exporter CSV</span>
+                <span>Export CSV</span>
               </button>
             </div>
           </div>
@@ -733,173 +600,264 @@ export default function DashboardClient({
               </small>
             </div>
           ) : (
-            <div style={{ overflowX: "auto" }}>
-              <table
-                style={{
-                  width: "100%",
-                  borderCollapse: "collapse",
-                  fontSize: 14,
-                }}
-              >
-                <thead>
-                  <tr
-                    style={{
-                      borderBottom: "1px solid var(--bd)",
-                      textAlign: "left",
-                      color: "var(--mu)",
-                      fontSize: 12.5,
-                      textTransform: "uppercase",
-                      letterSpacing: "0.04em",
-                    }}
-                  >
-                    <th style={{ padding: "12px 14px" }}>Candidat</th>
-                    <th style={{ padding: "12px 14px" }}>Contact</th>
-                    <th style={{ padding: "12px 14px" }}>Formation &amp; Format</th>
-                    <th style={{ padding: "12px 14px" }}>Statut</th>
-                    <th style={{ padding: "12px 14px" }}>Date</th>
-                    <th style={{ padding: "12px 14px", textAlign: "right" }}>
-                      Actions
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredLeads.map((lead) => {
-                    const badge = getStatusBadge(lead.status);
-                    return (
-                      <tr
-                        key={lead.id}
-                        style={{
-                          borderBottom: "1px solid var(--bd)",
-                          transition: "background 0.15s ease",
-                        }}
-                      >
-                        <td style={{ padding: "14px" }}>
-                          <strong style={{ display: "block", color: "var(--tx)" }}>
-                            {lead.fullName}
-                          </strong>
-                          {lead.message && (
-                            <span
-                              style={{
-                                display: "block",
-                                fontSize: 12.5,
-                                color: "var(--mu)",
-                                maxWidth: 260,
-                                whiteSpace: "nowrap",
-                                overflow: "hidden",
-                                textOverflow: "ellipsis",
-                              }}
-                              title={lead.message}
-                            >
-                              💬 {lead.message}
-                            </span>
-                          )}
-                        </td>
-
-                        <td style={{ padding: "14px" }}>
-                          {lead.phone ? (
-                            <a
-                              href={`https://wa.me/${lead.phone.replace(/[^0-9]/g, "")}`}
-                              target="_blank"
-                              rel="noreferrer"
-                              style={{
-                                display: "inline-flex",
-                                alignItems: "center",
-                                gap: 6,
-                                color: "#10b981",
-                                fontWeight: 700,
-                              }}
-                            >
-                              <Phone size={14} />
-                              <span>{lead.phone}</span>
-                            </a>
-                          ) : (
-                            <span style={{ color: "var(--mu)" }}>—</span>
-                          )}
-                          {lead.email && (
-                            <span
-                              style={{
-                                display: "block",
-                                fontSize: 12.5,
-                                color: "var(--mu)",
-                              }}
-                            >
-                              {lead.email}
-                            </span>
-                          )}
-                        </td>
-
-                        <td style={{ padding: "14px" }}>
-                          <strong style={{ display: "block", color: "var(--tx)" }}>
-                            {lead.formation}
-                          </strong>
-                          <span style={{ fontSize: 12.5, color: "var(--mu)" }}>
-                            {lead.format}
-                          </span>
-                        </td>
-
-                        <td style={{ padding: "14px" }}>
-                          <select
-                            disabled={updatingId === lead.id}
-                            value={lead.status}
-                            onChange={(e) =>
-                              handleStatusChange(lead.id, e.target.value)
-                            }
-                            style={{
-                              padding: "4px 8px",
-                              borderRadius: 8,
-                              fontSize: 12.5,
-                              fontWeight: 750,
-                              background: badge.bg,
-                              color: badge.color,
-                              border: `1px solid ${badge.border}`,
-                              cursor: "pointer",
-                            }}
-                          >
-                            <option value="PENDING">En attente</option>
-                            <option value="CONTACTED">Contacté</option>
-                            <option value="ENROLLED">Inscrit</option>
-                            <option value="ARCHIVED">Archivé</option>
-                          </select>
-                        </td>
-
-                        <td
+            <>
+              {/* Desktop Table View (>= 769px) */}
+              <div className="dash-desktop-table">
+                <table
+                  style={{
+                    width: "100%",
+                    borderCollapse: "collapse",
+                    fontSize: 14,
+                  }}
+                >
+                  <thead>
+                    <tr
+                      style={{
+                        borderBottom: "1px solid var(--bd)",
+                        textAlign: "left",
+                        color: "var(--mu)",
+                        fontSize: 12.5,
+                        textTransform: "uppercase",
+                        letterSpacing: "0.04em",
+                      }}
+                    >
+                      <th style={{ padding: "12px 14px" }}>Candidat</th>
+                      <th style={{ padding: "12px 14px" }}>Contact</th>
+                      <th style={{ padding: "12px 14px" }}>Formation &amp; Format</th>
+                      <th style={{ padding: "12px 14px" }}>Statut</th>
+                      <th style={{ padding: "12px 14px" }}>Date</th>
+                      <th style={{ padding: "12px 14px", textAlign: "right" }}>
+                        Actions
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredLeads.map((lead) => {
+                      const badge = getStatusBadge(lead.status);
+                      return (
+                        <tr
+                          key={lead.id}
                           style={{
-                            padding: "14px",
-                            fontSize: 13,
-                            color: "var(--mu)",
+                            borderBottom: "1px solid var(--bd)",
+                            transition: "background 0.15s ease",
                           }}
                         >
+                          <td style={{ padding: "14px" }}>
+                            <strong style={{ display: "block", color: "var(--tx)" }}>
+                              {lead.fullName}
+                            </strong>
+                            {lead.message && (
+                              <span
+                                style={{
+                                  display: "block",
+                                  fontSize: 12.5,
+                                  color: "var(--mu)",
+                                  maxWidth: 260,
+                                  whiteSpace: "nowrap",
+                                  overflow: "hidden",
+                                  textOverflow: "ellipsis",
+                                }}
+                                title={lead.message}
+                              >
+                                💬 {lead.message}
+                              </span>
+                            )}
+                          </td>
+
+                          <td style={{ padding: "14px" }}>
+                            {lead.phone ? (
+                              <a
+                                href={`https://wa.me/${lead.phone.replace(/[^0-9]/g, "")}`}
+                                target="_blank"
+                                rel="noreferrer"
+                                style={{
+                                  display: "inline-flex",
+                                  alignItems: "center",
+                                  gap: 6,
+                                  color: "#10b981",
+                                  fontWeight: 700,
+                                }}
+                              >
+                                <Phone size={14} />
+                                <span>{lead.phone}</span>
+                              </a>
+                            ) : (
+                              <span style={{ color: "var(--mu)" }}>—</span>
+                            )}
+                            {lead.email && (
+                              <span
+                                style={{
+                                  display: "block",
+                                  fontSize: 12.5,
+                                  color: "var(--mu)",
+                                }}
+                              >
+                                {lead.email}
+                              </span>
+                            )}
+                          </td>
+
+                          <td style={{ padding: "14px" }}>
+                            <strong style={{ display: "block", color: "var(--tx)" }}>
+                              {lead.formation}
+                            </strong>
+                            <span style={{ fontSize: 12.5, color: "var(--mu)" }}>
+                              {lead.format}
+                            </span>
+                          </td>
+
+                          <td style={{ padding: "14px" }}>
+                            <select
+                              disabled={updatingId === lead.id}
+                              value={lead.status}
+                              onChange={(e) =>
+                                handleStatusChange(lead.id, e.target.value)
+                              }
+                              style={{
+                                padding: "4px 8px",
+                                borderRadius: 8,
+                                fontSize: 12.5,
+                                fontWeight: 750,
+                                background: badge.bg,
+                                color: badge.color,
+                                border: `1px solid ${badge.border}`,
+                                cursor: "pointer",
+                              }}
+                            >
+                              <option value="PENDING">En attente</option>
+                              <option value="CONTACTED">Contacté</option>
+                              <option value="ENROLLED">Inscrit</option>
+                              <option value="ARCHIVED">Archivé</option>
+                            </select>
+                          </td>
+
+                          <td
+                            style={{
+                              padding: "14px",
+                              fontSize: 13,
+                              color: "var(--mu)",
+                            }}
+                          >
+                            {new Date(lead.createdAt).toLocaleDateString("fr-FR", {
+                              day: "2-digit",
+                              month: "short",
+                              hour: "2-digit",
+                              minute: "2-digit",
+                            })}
+                          </td>
+
+                          <td style={{ padding: "14px", textAlign: "right" }}>
+                            <button
+                              type="button"
+                              onClick={() => handleDeleteLead(lead.id)}
+                              style={{
+                                background: "transparent",
+                                border: "none",
+                                color: "#ef4444",
+                                cursor: "pointer",
+                                padding: 6,
+                                borderRadius: 6,
+                              }}
+                              title="Supprimer la candidature"
+                            >
+                              <Trash2 size={16} />
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Mobile Cards View (< 769px) */}
+              <div className="dash-mobile-leads">
+                {filteredLeads.map((lead) => {
+                  const badge = getStatusBadge(lead.status);
+                  return (
+                    <div key={lead.id} className="dash-lead-card">
+                      <div className="dash-lead-card-top">
+                        <div>
+                          <strong className="dash-lead-name">{lead.fullName}</strong>
+                          <span className="dash-lead-formation-badge">
+                            {lead.formation} • {lead.format}
+                          </span>
+                        </div>
+                        <select
+                          disabled={updatingId === lead.id}
+                          value={lead.status}
+                          onChange={(e) =>
+                            handleStatusChange(lead.id, e.target.value)
+                          }
+                          style={{
+                            padding: "4px 8px",
+                            borderRadius: 8,
+                            fontSize: 12,
+                            fontWeight: 750,
+                            background: badge.bg,
+                            color: badge.color,
+                            border: `1px solid ${badge.border}`,
+                            cursor: "pointer",
+                          }}
+                        >
+                          <option value="PENDING">En attente</option>
+                          <option value="CONTACTED">Contacté</option>
+                          <option value="ENROLLED">Inscrit</option>
+                          <option value="ARCHIVED">Archivé</option>
+                        </select>
+                      </div>
+
+                      {lead.message && (
+                        <p className="dash-lead-message">💬 {lead.message}</p>
+                      )}
+
+                      <div className="dash-lead-contacts">
+                        {lead.phone && (
+                          <a
+                            href={`https://wa.me/${lead.phone.replace(/[^0-9]/g, "")}`}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="dash-contact-pill wa"
+                          >
+                            <Phone size={13} />
+                            <span>WhatsApp ({lead.phone})</span>
+                          </a>
+                        )}
+                        {lead.email && (
+                          <a
+                            href={`mailto:${lead.email}`}
+                            className="dash-contact-pill email"
+                          >
+                            <Mail size={13} />
+                            <span>{lead.email}</span>
+                          </a>
+                        )}
+                      </div>
+
+                      <div className="dash-lead-footer">
+                        <span className="dash-lead-date">
                           {new Date(lead.createdAt).toLocaleDateString("fr-FR", {
                             day: "2-digit",
                             month: "short",
                             hour: "2-digit",
                             minute: "2-digit",
                           })}
-                        </td>
-
-                        <td style={{ padding: "14px", textAlign: "right" }}>
-                          <button
-                            type="button"
-                            onClick={() => handleDeleteLead(lead.id)}
-                            style={{
-                              background: "transparent",
-                              border: "none",
-                              color: "#ef4444",
-                              cursor: "pointer",
-                              padding: 6,
-                              borderRadius: 6,
-                            }}
-                            title="Supprimer la candidature"
-                          >
-                            <Trash2 size={16} />
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => handleDeleteLead(lead.id)}
+                          className="dash-delete-btn"
+                          title="Supprimer la candidature"
+                        >
+                          <Trash2 size={14} />
+                          <span>Supprimer</span>
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </>
           )}
         </div>
       )}
@@ -907,21 +865,12 @@ export default function DashboardClient({
       {/* TAB 2: FORMATIONS MANAGEMENT */}
       {activeTab === "formations" && (
         <div>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              flexWrap: "wrap",
-              gap: 16,
-              marginBottom: 20,
-            }}
-          >
+          <div className="dash-section-header">
             <div>
-              <h2 style={{ fontSize: 20, fontWeight: 800, margin: 0 }}>
+              <h2 className="dash-section-title">
                 Catalogue des formations ({formations.length})
               </h2>
-              <p style={{ margin: "4px 0 0", color: "var(--mu)", fontSize: 14 }}>
+              <p className="dash-section-desc">
                 Ces formations s&apos;affichent directement sur la page d&apos;accueil et dans le modal de détails.
               </p>
             </div>
@@ -929,7 +878,7 @@ export default function DashboardClient({
             <button
               type="button"
               onClick={openAddFormation}
-              className="btn btn-p"
+              className="btn btn-p dash-add-btn"
               style={{ display: "inline-flex", alignItems: "center", gap: 8 }}
             >
               <Plus size={18} />
@@ -937,13 +886,7 @@ export default function DashboardClient({
             </button>
           </div>
 
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))",
-              gap: 20,
-            }}
-          >
+          <div className="dash-formations-grid">
             {formations.map((f) => (
               <div
                 key={f.id}
@@ -1112,16 +1055,7 @@ export default function DashboardClient({
 
       {/* TAB 3: SETTINGS & COORDINATES */}
       {activeTab === "settings" && (
-        <div
-          style={{
-            maxWidth: 760,
-            background: "var(--card)",
-            border: "1px solid var(--bd)",
-            borderRadius: 22,
-            padding: "32px",
-            boxShadow: "var(--sh)",
-          }}
-        >
+        <div className="dash-card dash-settings-card">
           <div style={{ marginBottom: 24 }}>
             <h2 style={{ fontSize: 20, fontWeight: 800, margin: "0 0 6px" }}>
               Coordonnées de l&apos;Académie &amp; Paramètres
@@ -1197,13 +1131,7 @@ export default function DashboardClient({
               </small>
             </div>
 
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: 14,
-              }}
-            >
+            <div className="dash-form-row-2">
               <div>
                 <label
                   style={{
@@ -1335,8 +1263,10 @@ export default function DashboardClient({
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
+                  justifyContent: "center",
                   gap: 8,
-                  minWidth: 200,
+                  width: "100%",
+                  maxWidth: 280,
                 }}
               >
                 {settingsLoading ? (
@@ -1354,21 +1284,12 @@ export default function DashboardClient({
       {/* TAB 4: FAQ MANAGEMENT */}
       {activeTab === "faqs" && (
         <div>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              flexWrap: "wrap",
-              gap: 16,
-              marginBottom: 20,
-            }}
-          >
+          <div className="dash-section-header">
             <div>
-              <h2 style={{ fontSize: 20, fontWeight: 800, margin: 0 }}>
+              <h2 className="dash-section-title">
                 Questions fréquentes ({faqs.length})
               </h2>
-              <p style={{ margin: "4px 0 0", color: "var(--mu)", fontSize: 14 }}>
+              <p className="dash-section-desc">
                 Ces réponses s&apos;affichent dans la section accordéon FAQ sur le site.
               </p>
             </div>
@@ -1376,7 +1297,7 @@ export default function DashboardClient({
             <button
               type="button"
               onClick={openAddFaq}
-              className="btn btn-p"
+              className="btn btn-p dash-add-btn"
               style={{ display: "inline-flex", alignItems: "center", gap: 8 }}
             >
               <Plus size={18} />

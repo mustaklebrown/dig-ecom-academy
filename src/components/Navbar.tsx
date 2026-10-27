@@ -167,13 +167,13 @@ export default function Navbar() {
                   setAuthModalMode("signin");
                   setAuthModalOpen(true);
                 }}
-                className="btn btn-ghost btn-sm"
+                className="btn btn-ghost btn-sm nav-cta-desktop"
               >
                 Connexion
               </button>
             )}
 
-            <a href="#contact" className="btn btn-o">
+            <a href="#contact" className="btn btn-o nav-cta-desktop">
               S’inscrire
             </a>
 
@@ -204,15 +204,16 @@ export default function Navbar() {
               <a
                 href="#contact"
                 className="btn btn-o"
-                style={{ flex: 1 }}
+                style={{ flex: 1, justifyContent: "center" }}
                 onClick={handleNavLinkClick}
               >
                 S’inscrire
               </a>
-              {!session?.user && (
+              {!session?.user ? (
                 <button
                   type="button"
                   className="btn btn-l"
+                  style={{ flex: 1, justifyContent: "center" }}
                   onClick={() => {
                     setMobileMenuOpen(false);
                     setAuthModalMode("signin");
@@ -221,6 +222,16 @@ export default function Navbar() {
                 >
                   Connexion
                 </button>
+              ) : (
+                <Link
+                  href="/dashboard"
+                  className="btn btn-l"
+                  style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}
+                  onClick={handleNavLinkClick}
+                >
+                  <LayoutDashboard size={15} />
+                  Tableau de bord
+                </Link>
               )}
             </div>
           </nav>

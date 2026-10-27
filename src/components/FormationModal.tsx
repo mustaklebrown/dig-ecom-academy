@@ -85,18 +85,7 @@ export default function FormationModal({
         </p>
 
         {/* Quick specs */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-            gap: 12,
-            background: "var(--bg2)",
-            borderRadius: 16,
-            padding: "14px 16px",
-            marginBottom: 24,
-            textAlign: "center",
-          }}
-        >
+        <div className="modal-specs-grid">
           <div>
             <Clock size={16} color="var(--blue)" style={{ margin: "0 auto 4px" }} />
             <span style={{ display: "block", fontSize: 11, color: "var(--mu)", fontWeight: 600 }}>DURÉE</span>

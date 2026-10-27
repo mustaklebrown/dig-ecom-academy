@@ -387,13 +387,7 @@ export default function ContactSection({
                   </div>
 
                   {/* Phone & Email (2 columns) */}
-                  <div
-                    style={{
-                      display: "grid",
-                      gridTemplateColumns: "1fr 1fr",
-                      gap: 12,
-                    }}
-                  >
+                  <div className="contact-two-col">
                     <div className="input-field-group">
                       <label>
                         <span>WhatsApp / Tél *</span>

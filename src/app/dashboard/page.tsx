@@ -50,130 +50,63 @@ export default async function DashboardPage() {
   return (
     <div style={{ minHeight: "100vh", background: "var(--bg2)", paddingBottom: 60 }}>
       {/* Dashboard Header */}
-      <header style={{ background: "var(--card)", borderBottom: "1px solid var(--bd)" }}>
-        <div
-          className="w"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            height: 72,
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-            <Link
-              href="/"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 6,
-                color: "var(--blue)",
-                fontWeight: 700,
-                fontSize: 14,
-              }}
-            >
+      <header className="dash-header">
+        <div className="w dash-header-inner">
+          <div className="dash-header-title-group">
+            <Link href="/" className="dash-back-link">
               <ArrowLeft size={16} />
-              <span>Retour au site</span>
+              <span>Retour</span>
             </Link>
-            <div style={{ width: 1, height: 24, background: "var(--bd)" }} />
-            <h1 style={{ fontSize: 20, fontWeight: 800, margin: 0 }}>
-              Administration &amp; Gestion Académique
+            <div className="dash-header-sep" />
+            <h1 className="dash-title">
+              Administration &amp; Gestion
             </h1>
           </div>
 
-          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            <span
-              style={{
-                display: "inline-block",
-                width: 10,
-                height: 10,
-                borderRadius: "50%",
-                background: "#10b981",
-              }}
-            />
-            <span style={{ fontSize: 13, fontWeight: 700, color: "var(--mu)" }}>
-              PostgreSQL Connecté (Neon Cloud)
-            </span>
+          <div className="dash-db-badge">
+            <span className="dash-db-dot" />
+            <span className="dash-db-text">PostgreSQL Neon</span>
           </div>
         </div>
       </header>
 
-      <main className="w" style={{ marginTop: 32 }}>
+      <main className="w" style={{ marginTop: 24 }}>
         {/* KPI Cards */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-            gap: 18,
-            marginBottom: 32,
-          }}
-        >
-          <div
-            style={{
-              background: "var(--card)",
-              border: "1px solid var(--bd)",
-              borderRadius: 18,
-              padding: 22,
-              boxShadow: "var(--sh)",
-            }}
-          >
-            <div style={{ display: "flex", justifyContent: "space-between", color: "var(--blue)", marginBottom: 8 }}>
-              <span style={{ fontSize: 13, fontWeight: 700, textTransform: "uppercase" }}>Total Demandes</span>
-              <Users size={20} />
+        <div className="dash-kpi-grid">
+          <div className="dash-kpi-card">
+            <div className="dash-kpi-header" style={{ color: "var(--blue)" }}>
+              <span>Total Demandes</span>
+              <Users size={18} />
             </div>
-            <strong style={{ fontSize: 32, fontWeight: 800 }}>{totalLeads}</strong>
-            <p style={{ margin: "4px 0 0", fontSize: 13, color: "var(--mu)" }}>Inscriptions enregistrées</p>
+            <strong className="dash-kpi-num">{totalLeads}</strong>
+            <p className="dash-kpi-sub">Inscriptions enregistrées</p>
           </div>
 
-          <div
-            style={{
-              background: "var(--card)",
-              border: "1px solid var(--bd)",
-              borderRadius: 18,
-              padding: 22,
-              boxShadow: "var(--sh)",
-            }}
-          >
-            <div style={{ display: "flex", justifyContent: "space-between", color: "var(--orange)", marginBottom: 8 }}>
-              <span style={{ fontSize: 13, fontWeight: 700, textTransform: "uppercase" }}>À traiter</span>
-              <Clock size={20} />
+          <div className="dash-kpi-card">
+            <div className="dash-kpi-header" style={{ color: "var(--orange)" }}>
+              <span>À traiter</span>
+              <Clock size={18} />
             </div>
-            <strong style={{ fontSize: 32, fontWeight: 800 }}>{pendingLeads}</strong>
-            <p style={{ margin: "4px 0 0", fontSize: 13, color: "var(--mu)" }}>Candidats en attente</p>
+            <strong className="dash-kpi-num">{pendingLeads}</strong>
+            <p className="dash-kpi-sub">Candidats en attente</p>
           </div>
 
-          <div
-            style={{
-              background: "var(--card)",
-              border: "1px solid var(--bd)",
-              borderRadius: 18,
-              padding: 22,
-              boxShadow: "var(--sh)",
-            }}
-          >
-            <div style={{ display: "flex", justifyContent: "space-between", color: "#3b82f6", marginBottom: 8 }}>
-              <span style={{ fontSize: 13, fontWeight: 700, textTransform: "uppercase" }}>Contactés</span>
-              <MessageCircle size={20} />
+          <div className="dash-kpi-card">
+            <div className="dash-kpi-header" style={{ color: "#3b82f6" }}>
+              <span>Contactés</span>
+              <MessageCircle size={18} />
             </div>
-            <strong style={{ fontSize: 32, fontWeight: 800 }}>{contactedLeads}</strong>
-            <p style={{ margin: "4px 0 0", fontSize: 13, color: "var(--mu)" }}>Échanges en cours sur WhatsApp</p>
+            <strong className="dash-kpi-num">{contactedLeads}</strong>
+            <p className="dash-kpi-sub">Échanges WhatsApp</p>
           </div>
 
-          <div
-            style={{
-              background: "var(--card)",
-              border: "1px solid var(--bd)",
-              borderRadius: 18,
-              padding: 22,
-              boxShadow: "var(--sh)",
-            }}
-          >
-            <div style={{ display: "flex", justifyContent: "space-between", color: "#10b981", marginBottom: 8 }}>
-              <span style={{ fontSize: 13, fontWeight: 700, textTransform: "uppercase" }}>Confirmés</span>
-              <CheckCircle size={20} />
+          <div className="dash-kpi-card">
+            <div className="dash-kpi-header" style={{ color: "#10b981" }}>
+              <span>Confirmés</span>
+              <CheckCircle size={18} />
             </div>
-            <strong style={{ fontSize: 32, fontWeight: 800 }}>{enrolledLeads}</strong>
-            <p style={{ margin: "4px 0 0", fontSize: 13, color: "var(--mu)" }}>Inscriptions finalisées</p>
+            <strong className="dash-kpi-num">{enrolledLeads}</strong>
+            <p className="dash-kpi-sub">Inscriptions finalisées</p>
           </div>
         </div>
 

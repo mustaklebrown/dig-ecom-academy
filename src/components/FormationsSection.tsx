@@ -34,15 +34,7 @@ export default function FormationsSection({
         </div>
 
         {/* Filter Pills */}
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            gap: 10,
-            flexWrap: "wrap",
-            marginBottom: 36,
-          }}
-        >
+        <div className="formations-filter-container">
           {[
             { id: "ALL", label: "Tous les programmes" },
             { id: "POPULAR", label: "🔥 Plus demandées" },
@@ -54,19 +46,7 @@ export default function FormationsSection({
               key={tab.id}
               type="button"
               onClick={() => setFilter(tab.id)}
-              style={{
-                padding: "8px 18px",
-                borderRadius: 999,
-                fontSize: 14,
-                fontWeight: 700,
-                border: "1.5px solid",
-                borderColor: filter === tab.id ? "var(--blue)" : "var(--bd)",
-                background: filter === tab.id ? "var(--blue)" : "var(--card)",
-                color: filter === tab.id ? "#ffffff" : "var(--tx)",
-                boxShadow: filter === tab.id ? "0 4px 14px rgba(31, 46, 230, 0.25)" : "none",
-                cursor: "pointer",
-                transition: "all 0.2s ease",
-              }}
+              className={`formations-filter-btn ${filter === tab.id ? "active" : ""}`}
             >
               {tab.label}
             </button>
