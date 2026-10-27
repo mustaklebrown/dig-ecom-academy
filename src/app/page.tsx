@@ -3,6 +3,8 @@ import ShowcaseApp from "@/components/ShowcaseApp";
 import { FormationData } from "@/components/FormationModal";
 import { FaqItemData } from "@/components/FaqSection";
 
+export const revalidate = 60; // ISR: refresh every 60 seconds
+
 export default async function HomePage() {
   let formations: FormationData[] = [];
   let faqs: FaqItemData[] = [];

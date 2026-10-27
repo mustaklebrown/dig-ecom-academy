@@ -3,6 +3,9 @@ import Link from "next/link";
 import { ArrowLeft, Users, CheckCircle, Clock, BookOpen, MessageCircle } from "lucide-react";
 import DashboardClient from "@/app/dashboard/DashboardClient";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export default async function DashboardPage() {
   const leads = await prisma.lead.findMany({
     orderBy: { createdAt: "desc" },
