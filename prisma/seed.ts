@@ -1,9 +1,10 @@
 import { prisma } from '../src/lib/prisma';
+import { auth } from '../src/lib/auth';
 
 async function main() {
-  console.log('🌱 Seeding Dig e-com Academy database...');
+  console.log('🌱 Seeding Dig e-com Academy database on Neon Cloud PostgreSQL...\n');
 
-  // Formations data
+  // 1. Formations data
   const formations = [
     {
       title: 'Marketing digital',
@@ -121,6 +122,7 @@ async function main() {
     },
   ];
 
+  console.log('📚 Synchronizing formations...');
   for (const f of formations) {
     await prisma.formation.upsert({
       where: { slug: f.slug },
@@ -128,8 +130,9 @@ async function main() {
       create: f,
     });
   }
+  console.log(`   ✓ ${formations.length} formations synchronisées avec succès.`);
 
-  // FAQ Items data
+  // 2. FAQ Items data
   const faqs = [
     {
       question: 'Faut-il un diplôme pour s’inscrire ?',
@@ -151,12 +154,13 @@ async function main() {
     },
     {
       question: 'Comment s’inscrire et payer ?',
-      answer: 'Envoyez-nous simplement un message via le formulaire ou directement sur WhatsApp (+269 000 00 00). Nous vous orientons vers la bonne session et vous présentons les modalités de paiement flexibles.',
+      answer: 'Envoyez-nous simplement un message via le formulaire ou directement sur WhatsApp (+269 333 00 00). Nous vous orientons vers la bonne session et vous présentons les modalités de paiement flexibles.',
       category: 'Tarifs & Inscription',
       order: 4,
     },
   ];
 
+  console.log('\n❓ Synchronizing FAQ items...');
   for (const faq of faqs) {
     const existing = await prisma.faqItem.findFirst({
       where: { question: faq.question },
@@ -165,13 +169,102 @@ async function main() {
       await prisma.faqItem.create({ data: faq });
     }
   }
+  console.log(`   ✓ ${faqs.length} questions fréquentes enregistrées.`);
 
-  console.log('✅ Database seeded successfully with 6 formations and 4 FAQ items!');
+  // 3. Admin User Creation
+  console.log('\n👑 Checking & creating Admin User...');
+  const adminEmail = process.env.ADMIN_EMAIL || 'admin@dig-ecom.academy';
+  const adminPassword = process.env.ADMIN_PASSWORD || 'Admin2026!Comores';
+  const adminName = 'Administrateur Dig e-com';
+
+  const existingUser = await prisma.user.findUnique({
+    where: { email: adminEmail },
+  });
+
+  if (!existingUser) {
+    try {
+      await auth.api.signUpEmail({
+        body: {
+          name: adminName,
+          email: adminEmail,
+          password: adminPassword,
+        },
+      });
+
+      await prisma.user.update({
+        where: { email: adminEmail },
+        data: {
+          role: 'admin',
+          emailVerified: true,
+        },
+      });
+
+      console.log(`   ✓ Utilisateur Administrateur créé avec succès !`);
+      console.log(`     - Email    : ${adminEmail}`);
+      console.log(`     - Mot de passe : ${adminPassword}`);
+      console.log(`     - Rôle     : admin`);
+    } catch (authError: any) {
+      console.error('   ❌ Erreur création admin via Better Auth:', authError.message || authError);
+    }
+  } else {
+    await prisma.user.update({
+      where: { email: adminEmail },
+      data: { role: 'admin' },
+    });
+    console.log(`   ✓ L'utilisateur ${adminEmail} existe déjà et son rôle admin a été confirmé.`);
+  }
+
+  // 4. Initial Sample Leads (if none exist)
+  const leadCount = await prisma.lead.count();
+  if (leadCount === 0) {
+    console.log('\n📋 Ajout de candidatures d’exemple pour le tableau de bord...');
+    const mkt = await prisma.formation.findUnique({ where: { slug: 'marketing-digital' } });
+    const ecom = await prisma.formation.findUnique({ where: { slug: 'e-commerce' } });
+    const ent = await prisma.formation.findUnique({ where: { slug: 'entrepreneuriat' } });
+
+    await prisma.lead.createMany({
+      data: [
+        {
+          fullName: 'Fatouma Ali',
+          phone: '+269 333 12 34',
+          email: 'fatouma.ali@gmail.com',
+          formation: 'Marketing digital',
+          format: 'Présentiel',
+          status: 'CONTACTED',
+          message: 'Je souhaite développer la visibilité de ma boutique de vêtements à Volovolo.',
+          formationId: mkt?.id || null,
+        },
+        {
+          fullName: 'Ahmed Said Mohamed',
+          phone: '+269 345 67 89',
+          email: 'ahmed.said@outlook.com',
+          formation: 'E-commerce',
+          format: 'En ligne',
+          status: 'PENDING',
+          message: 'Je réside en France et je prépare un business de livraison aux Comores.',
+          formationId: ecom?.id || null,
+        },
+        {
+          fullName: 'Mariama Bacar',
+          phone: '+269 321 00 11',
+          email: 'mariama.bacar@gmail.com',
+          formation: 'Entrepreneuriat',
+          format: 'Présentiel',
+          status: 'ENROLLED',
+          message: 'Inscription confirmée pour la session de samedi prochain.',
+          formationId: ent?.id || null,
+        },
+      ],
+    });
+    console.log('   ✓ 3 candidatures de démonstration enregistrées.');
+  }
+
+  console.log('\n✨ Database seeding complete on Neon Cloud PostgreSQL!');
 }
 
 main()
   .catch((e) => {
-    console.error(e);
+    console.error('Seed execution error:', e);
     process.exit(1);
   })
   .finally(async () => {

@@ -63,7 +63,7 @@ export default async function DashboardPage() {
               }}
             />
             <span style={{ fontSize: 13, fontWeight: 700, color: "var(--mu)" }}>
-              PostgreSQL Connecté (Docker)
+              PostgreSQL Connecté (Neon Cloud)
             </span>
           </div>
         </div>
