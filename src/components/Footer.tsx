@@ -1,7 +1,22 @@
 import Image from "next/image";
-import Link from "next/link";
 
-export default function Footer() {
+interface FooterProps {
+  settings?: {
+    campusAddress?: string;
+    whatsappNumber?: string;
+    email?: string;
+    openingHours?: string;
+  } | null;
+}
+
+export default function Footer({ settings }: FooterProps) {
+  const address =
+    settings?.campusAddress ||
+    "Moroni Hadoudja (ancien Campus France), Grande Comore";
+  const phone = settings?.whatsappNumber || "+269 333 00 00";
+  const email = settings?.email || "contact@dig-ecom.academy";
+  const hours = settings?.openingHours || "Lun - Sam : 08h30 - 18h00";
+
   return (
     <footer>
       <div className="w">
@@ -47,10 +62,10 @@ export default function Footer() {
           <div>
             <h4>Coordonnées</h4>
             <ul style={{ color: "#aab0dd" }}>
-              <li>📍 Moroni, Grande Comore</li>
-              <li>💬 WhatsApp : +269 000 00 00</li>
-              <li>✉️ contact@dig-ecom.academy</li>
-              <li>🕒 Lun - Sam : 08h30 - 18h00</li>
+              <li>📍 {address}</li>
+              <li>💬 WhatsApp : {phone}</li>
+              <li>✉️ {email}</li>
+              <li>🕒 {hours}</li>
             </ul>
           </div>
         </div>

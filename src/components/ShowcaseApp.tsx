@@ -16,9 +16,14 @@ import { FaqItemData } from "./FaqSection";
 interface ShowcaseAppProps {
   formations: FormationData[];
   faqs: FaqItemData[];
+  settings?: any;
 }
 
-export default function ShowcaseApp({ formations, faqs }: ShowcaseAppProps) {
+export default function ShowcaseApp({
+  formations,
+  faqs,
+  settings,
+}: ShowcaseAppProps) {
   const [selectedFormation, setSelectedFormation] = useState<string>(
     formations[0]?.title || "Marketing digital"
   );
@@ -41,9 +46,10 @@ export default function ShowcaseApp({ formations, faqs }: ShowcaseAppProps) {
         <ContactSection
           selectedFormation={selectedFormation}
           formationTitles={formationTitles}
+          settings={settings}
         />
       </main>
-      <Footer />
+      <Footer settings={settings} />
     </>
   );
 }

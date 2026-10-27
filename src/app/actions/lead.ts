@@ -79,3 +79,16 @@ export async function updateLeadStatusAction(leadId: string, status: string) {
     return { success: false, error: error.message };
   }
 }
+
+export async function deleteLeadAction(leadId: string) {
+  try {
+    await prisma.lead.delete({
+      where: { id: leadId },
+    });
+    revalidatePath("/dashboard");
+    return { success: true };
+  } catch (error: any) {
+    console.error("Error deleting lead:", error);
+    return { success: false, error: error.message };
+  }
+}

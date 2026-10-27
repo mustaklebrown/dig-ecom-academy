@@ -124,3 +124,16 @@ model FaqItem {
 
   @@map("faq_item")
 }
+
+model SiteSettings {
+  id             String   @id @default("default")
+  campusName     String   @default("Campus Moroni Hadoudja")
+  campusAddress  String   @default("Moroni Hadoudja (ancien Campus France), Grande Comore")
+  whatsappNumber String   @default("+269 333 00 00")
+  email          String   @default("contact@dig-ecom.academy")
+  openingHours   String   @default("Lun - Sam : 08h30 - 18h00")
+  announcement   String?  @default("Admissions ouvertes • Session 2026")
+  updatedAt      DateTime @updatedAt
+
+  @@map("site_settings")
+}

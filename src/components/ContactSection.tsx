@@ -25,11 +25,19 @@ import {
 interface ContactSectionProps {
   selectedFormation: string;
   formationTitles: string[];
+  settings?: {
+    campusAddress?: string;
+    whatsappNumber?: string;
+    email?: string;
+    openingHours?: string;
+    announcement?: string;
+  } | null;
 }
 
 export default function ContactSection({
   selectedFormation,
   formationTitles,
+  settings,
 }: ContactSectionProps) {
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
@@ -56,7 +64,16 @@ export default function ContactSection({
     }
   }, [selectedFormation]);
 
-  const waNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "2693330000";
+  const waNumber =
+    settings?.whatsappNumber ||
+    process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ||
+    "2693330000";
+  const address =
+    settings?.campusAddress ||
+    "Moroni Hadoudja (ancien Campus France), Grande Comore";
+  const contactEmail = settings?.email || "contact@dig-ecom.academy";
+  const hours = settings?.openingHours || "Lun - Sam : 08h30 - 18h00";
+  const badgeText = settings?.announcement || "ADMISSIONS OUVERTES • SESSION 2026";
 
   // Real-time generated WhatsApp message
   const previewMessage = `Bonjour Dig e-com Academy, je m'appelle ${
@@ -131,7 +148,7 @@ export default function ContactSection({
             <div>
               <div className="contact-badge-pill">
                 <span className="pulse-dot" />
-                <span>ADMISSIONS OUVERTES • SESSION 2026</span>
+                <span>{badgeText}</span>
               </div>
 
               <h2 className="contact-main-title" style={{ marginTop: 14 }}>
@@ -161,7 +178,7 @@ export default function ContactSection({
                 </div>
                 <div className="channel-body">
                   <small className="channel-tag-wa">Chat direct WhatsApp</small>
-                  <strong>+269 333 00 00</strong>
+                  <strong>{waNumber}</strong>
                   <span>Réponse rapide en moins de 2 heures</span>
                 </div>
                 <ExternalLink size={18} color="var(--mu)" />
@@ -172,14 +189,14 @@ export default function ContactSection({
                   <MapPin size={22} />
                 </div>
                 <div className="channel-body">
-                  <small>Campus physique</small>
-                  <strong>Moroni, Grande Comore</strong>
-                  <span>Accueil &amp; cours du Lundi au Samedi (8h30 - 18h00)</span>
+                  <small>Campus physique &amp; Siège</small>
+                  <strong>{address}</strong>
+                  <span>Accueil &amp; cours : {hours}</span>
                 </div>
               </div>
 
               <a
-                href="mailto:contact@dig-ecom.academy"
+                href={`mailto:${contactEmail}`}
                 className="contact-channel-card"
                 title="Nous envoyer un email"
               >
@@ -188,7 +205,7 @@ export default function ContactSection({
                 </div>
                 <div className="channel-body">
                   <small>Email académique &amp; B2B</small>
-                  <strong>contact@dig-ecom.academy</strong>
+                  <strong>{contactEmail}</strong>
                   <span>Pour les demandes institutionnelles et devis entreprises</span>
                 </div>
               </a>

@@ -8,6 +8,7 @@ export const revalidate = 60; // ISR: refresh every 60 seconds
 export default async function HomePage() {
   let formations: FormationData[] = [];
   let faqs: FaqItemData[] = [];
+  let settings = null;
 
   try {
     const dbFormations = await prisma.formation.findMany({
@@ -31,11 +32,14 @@ export default async function HomePage() {
       level: f.level,
     }));
 
-    const dbFaqs = await prisma.faqItem.findMany({
-      orderBy: { order: "asc" },
-    });
+    const [dbFaqs, dbSettings] = await Promise.all([
+      prisma.faqItem.findMany({ orderBy: { order: "asc" } }),
+      prisma.siteSettings.findUnique({ where: { id: "default" } }),
+    ]);
 
-    faqs = dbFaqs.map((item) => ({
+    settings = dbSettings;
+
+    faqs = dbFaqs.map((item: any) => ({
       id: item.id,
       question: item.question,
       answer: item.answer,
@@ -200,5 +204,5 @@ export default async function HomePage() {
     ];
   }
 
-  return <ShowcaseApp formations={formations} faqs={faqs} />;
+  return <ShowcaseApp formations={formations} faqs={faqs} settings={settings} />;
 }

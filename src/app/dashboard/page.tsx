@@ -1,20 +1,46 @@
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
-import { ArrowLeft, Users, CheckCircle, Clock, BookOpen, MessageCircle } from "lucide-react";
+import { ArrowLeft, Users, CheckCircle, Clock, MessageCircle } from "lucide-react";
 import DashboardClient from "@/app/dashboard/DashboardClient";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export default async function DashboardPage() {
-  const leads = await prisma.lead.findMany({
-    orderBy: { createdAt: "desc" },
-    include: {
-      formationRef: {
-        select: { title: true, icon: true },
+  const [leads, formations, faqs] = await Promise.all([
+    prisma.lead.findMany({
+      orderBy: { createdAt: "desc" },
+      include: {
+        formationRef: {
+          select: { title: true, icon: true },
+        },
       },
-    },
+    }),
+    prisma.formation.findMany({
+      orderBy: { order: "asc" },
+    }),
+    prisma.faqItem.findMany({
+      orderBy: { order: "asc" },
+    }),
+  ]);
+
+  let settings = await prisma.siteSettings.findUnique({
+    where: { id: "default" },
   });
+
+  if (!settings) {
+    settings = await prisma.siteSettings.create({
+      data: {
+        id: "default",
+        campusName: "Campus Moroni Hadoudja",
+        campusAddress: "Moroni Hadoudja (ancien Campus France), Grande Comore",
+        whatsappNumber: "+269 333 00 00",
+        email: "contact@dig-ecom.academy",
+        openingHours: "Lun - Sam : 08h30 - 18h00",
+        announcement: "Admissions ouvertes • Session 2026",
+      },
+    });
+  }
 
   const totalLeads = leads.length;
   const pendingLeads = leads.filter((l) => l.status === "PENDING").length;
@@ -51,7 +77,7 @@ export default async function DashboardPage() {
             </Link>
             <div style={{ width: 1, height: 24, background: "var(--bd)" }} />
             <h1 style={{ fontSize: 20, fontWeight: 800, margin: 0 }}>
-              Tableau de bord — Inscriptions &amp; Candidatures
+              Administration &amp; Gestion Académique
             </h1>
           </div>
 
@@ -151,8 +177,20 @@ export default async function DashboardPage() {
           </div>
         </div>
 
-        {/* Interactive Leads Table */}
-        <DashboardClient initialLeads={leads} />
+        {/* Multi-Tab Control Center */}
+        <DashboardClient
+          initialLeads={leads}
+          initialFormations={formations}
+          initialFaqs={faqs}
+          initialSettings={{
+            campusName: settings.campusName,
+            campusAddress: settings.campusAddress,
+            whatsappNumber: settings.whatsappNumber,
+            email: settings.email,
+            openingHours: settings.openingHours,
+            announcement: settings.announcement || "",
+          }}
+        />
       </main>
     </div>
   );
